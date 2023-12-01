@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Metadata;
 
 public class playercontrols : MonoBehaviour
 {
+    public Vector3 rotationPoint;
     private float previousTime;
     public float fallTime = 1f;
-    public static int height = 20;
-    public static int width = 10;
+    public float xRange = 35;
+    public float yRange = 95;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,40 +22,39 @@ public class playercontrols : MonoBehaviour
         if (Input.GetButtonDown("Left"))
         {
             transform.position += new Vector3(-10, 0, 0);
-                if(!ValidMove())
-                transform.position = new Vector3(-10, 0, 0);
         }
         else if (Input.GetButtonDown("Right"))
         {
             transform.position += new Vector3(10, 0, 0);
-            if (!ValidMove())
-                transform.position = new Vector3(10, 0, 0);
         }
 
         //timer before block moves down
         if(Time.time - previousTime > (Input.GetButton("Down") ? fallTime / 10 : fallTime))
         {
             transform.position += new Vector3(0, -10, 0);
-            if (!ValidMove())
-                transform.position = new Vector3(0, -10, 0);
             previousTime = Time.time;
         }
 
-    }
-
-    bool ValidMove()
-    {
-       /* foreach (Transform children in transform)
+        if (transform.position.x < -xRange)
         {
-            int roundedX = Mathf.RoundToInt(children.position.x);
-            int roundedY = Mathf.RoundToInt(children.position.y);
-
-            if(roundedX < 5 || roundedX >= width || roundedY < 5 ||roundedY >= height)
-            {
-                return false;
-            }
-        }*/
-
-        return true;
+            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x > xRange)
+        {
+            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+        }
+        if (transform.position.y < -yRange)
+        {
+            transform.position = new Vector3(transform.position.x, -yRange, -transform.position.z);
+        }
+        if (transform.position.y > yRange)
+        {
+            transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
+        }
+        //rotation
+        if (Input.GetButtonDown("Rotate"))
+        {
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        }
     }
 }
