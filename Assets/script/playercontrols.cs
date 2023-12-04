@@ -33,28 +33,35 @@ public class playercontrols : MonoBehaviour
         {
             transform.position += new Vector3(0, -10, 0);
             previousTime = Time.time;
+           
+
         }
 
-        if (transform.position.x < -xRange)
-        {
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
-        }
-        if (transform.position.x > xRange)
-        {
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
-        }
-        if (transform.position.y < -yRange)
-        {
-            transform.position = new Vector3(transform.position.x, -yRange, -transform.position.z);
-        }
-        if (transform.position.y > yRange)
-        {
-            transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
-        }
         //rotation
         if (Input.GetButtonDown("Rotate"))
         {
             transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        }
+
+
+        foreach (Transform children in transform)
+        {
+            if (transform.position.x < -xRange)
+            {
+                transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
+            }
+            if (transform.position.x > xRange)
+            {
+                transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+            }
+            if (transform.position.y < -yRange)
+            {
+                transform.position = new Vector3(transform.position.x, -yRange, -transform.position.z);
+            }
+            if (transform.position.y > yRange)
+            {
+                transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
+            }
         }
     }
 }
