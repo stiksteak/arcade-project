@@ -20,9 +20,9 @@ public class detectWallLeft : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("WallLeft"))
+        if (other.CompareTag("Left"))
         {
-            transform.position -= new Vector3(-10, 0, 0);
+            transform.position += new Vector3(10, 0, 0);
         }
     }
 
